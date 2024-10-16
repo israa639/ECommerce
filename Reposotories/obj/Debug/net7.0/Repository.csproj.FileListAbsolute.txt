@@ -1,0 +1,15 @@
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.csproj.AssemblyReference.cache
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.AssemblyInfoInputs.cache
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.AssemblyInfo.cs
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.csproj.CoreCompileInputs.cache
+C:\ECommerce\Reposotories\bin\Debug\net7.0\Repository.deps.json
+C:\ECommerce\Reposotories\bin\Debug\net7.0\Repository.dll
+C:\ECommerce\Reposotories\bin\Debug\net7.0\Repository.pdb
+C:\ECommerce\Reposotories\bin\Debug\net7.0\Domain.dll
+C:\ECommerce\Reposotories\bin\Debug\net7.0\Domain.pdb
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.csproj.CopyComplete
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.dll
+C:\ECommerce\Reposotories\obj\Debug\net7.0\refint\Repository.dll
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.pdb
+C:\ECommerce\Reposotories\obj\Debug\net7.0\ref\Repository.dll

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "2noZBi3HjJo8xIlXxjsw7PraNC6U9DxT++DKtlCW11LN3OU23IZN785KqhvmLyqKJ9gNNbfeF56We41dnO6PEQ==",
+  "success": true,
+  "projectFilePath": "C:\\ECommerce\\Reposotories\\Repository.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}
