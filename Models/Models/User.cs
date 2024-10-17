@@ -30,7 +30,7 @@ namespace Domain.Models
             if (!ShoppingCart.items.Any())
                 throw new Exception("Cart is empty");
 
-            Order newOrder = new Order() { UserID = this.UserID, OrderItems = ShoppingCart.items, TotalAmount = ShoppingCart.CartTotalPrice() };
+            Order newOrder = new Order() { UserID = this.UserID, OrderItems = ShoppingCart.items.Values, TotalAmount = ShoppingCart.CartTotalPrice() };
             ShoppingCart.ClearCart();
             Orders.AddFirst(newOrder);
             return newOrder.TotalAmount;

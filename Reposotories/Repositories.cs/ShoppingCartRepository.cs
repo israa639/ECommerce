@@ -27,7 +27,7 @@ namespace Repository.Repositories
 
             if (user is null)
             { throw new ArgumentException("User not found."); }
-            return user.ShoppingCart.items;
+            return user.ShoppingCart.items.Values;
         }
         public void DeleteItem(User user, int productId)
         {
@@ -44,6 +44,8 @@ namespace Repository.Repositories
         {
             if (user is null)
             { throw new ArgumentException("User is not found."); }
+            if (GetItemById(user, productId) is null)
+            { throw new ArgumentException("item is not in you cart"); }
 
             DeleteItem(user, productId);
             AddItem(user, productId, quantity);

@@ -13,3 +13,4 @@ C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.dll
 C:\ECommerce\Reposotories\obj\Debug\net7.0\refint\Repository.dll
 C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.pdb
 C:\ECommerce\Reposotories\obj\Debug\net7.0\ref\Repository.dll
+C:\ECommerce\Reposotories\obj\Debug\net7.0\Repository.sourcelink.json

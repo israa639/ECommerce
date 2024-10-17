@@ -13,7 +13,7 @@ namespace Repository.Repositories
                 if (DoesUsernameExist(user.UserName) || DoesEmailExist(user.Email))
                     throw new Exception("UserName or Email already exist");
 
-                DataStore.Users.Add(user);
+                DataStore.Users.AddFirst(user);
                 DataStore.UserNames.Add(user.UserName);
                 DataStore.Emails.Add(user.Email);
             }

@@ -12,7 +12,8 @@ namespace Domain.Models
 
         private Decimal CalculatePrice()
         {
-            Product product = DataStore.products.FirstOrDefault(p => p.ProductID == this.ProductId);
+            Product product = null;
+            DataStore.products.TryGetValue(ProductId, out product);
             return product is null ? 0 : Quantity * product.Price;
         }
         public override string ToString()

@@ -24,7 +24,7 @@ namespace ECommerce
             return Input;
 
         }
-        private static int GetUserChoice()
+        private static int GetUserMenuChoice()
         {
             int userChoice;
             while (!int.TryParse(ReadLine(), out userChoice))
@@ -46,7 +46,7 @@ namespace ECommerce
             WriteLine(@"Welcome!
                press 1 to SignIn
                press 2  to SignUp");
-            int userChoice = GetUserChoice();
+            int userChoice = GetUserMenuChoice();
 
             switch (userChoice)
             {
@@ -163,12 +163,24 @@ namespace ECommerce
         {
             WriteLine(@"
                press 1 to view our products
-               press 2  to view your shopping cart ");
-            int userChoice = GetUserChoice();
+               press 2  to view your shopping cart
+               press 3  to add Item to your cart
+               press 4  to update your shopping cart
+               press 5 to delete from your cart
+               press 6 to view your past orders
+");
+            int userChoice = GetUserMenuChoice();
             switch (userChoice)
             {
                 case 1: DisplayProductsUI(); break;
                 case 2: DisplayUserShoppingCartUI(); break;
+                case 3: AddItemToCartUI(); break;
+                case 4: UpdateItemInTheCartUI(); break;
+                case 5: RemoveItemFromTheCartUI(); break;
+                case 6: ViewOrderHistoryUI(); break;
+                default: DisplayUserShoppingCartUI(); break;
+
+
             }
         }
         private void DisplayProductsUI()
@@ -177,40 +189,23 @@ namespace ECommerce
             {
                 WriteLine(product);
             }
-            WriteLine(@"Welcome!
-               press 1  to add items to your shopping cart 
-               press 2 to return to menu
-                ");
-            int userChoice = GetUserChoice();
-            switch (userChoice)
-            {
-                case 1:
-                    AddItemToCartUI();
-                    break;
-                case 2:
-                    DisplayPostRegistrationMenu();
-                    break;
-            }
-
+            DisplayPostRegistrationMenu();
         }
 
         private void DisplayUserShoppingCartUI()
         {
             WriteLine("Your shopping Cart");
             WriteLine("----------------------------------------");
-            foreach (var item in currentUser.ShoppingCart.items)
+            foreach (var item in currentUser.ShoppingCart.items.Values)
             {
                 WriteLine(item);
             }
             WriteLine(@"
                press 1 to order your shopping Cart
-               press 2  to update your shopping cart
-               press 3 to delete from your cart
-               press 4 to view your past orders
-               press 5 to return to menu
+               press 2 to return to menu
                  ");
 
-            int userChoice = GetUserChoice();
+            int userChoice = GetUserMenuChoice();
 
             switch (userChoice)
             {
@@ -218,16 +213,6 @@ namespace ECommerce
                     MakeOrderUI();
                     break;
                 case 2:
-                    UpdateItemInTheCartUI();
-                    break;
-                case 3:
-                    RemoveItemFromTheCartUI();
-                    break;
-                case 4:
-                    ViewOrderHistoryUI();
-                    break;
-                    break;
-                case 5:
                     DisplayPostRegistrationMenu();
                     break;
                 default:
@@ -304,11 +289,11 @@ namespace ECommerce
                 {
                     WriteLine(ex);
                 }
-                finally
-                {
-                    DisplayPostRegistrationMenu();
-                }
+
+
             }
+            DisplayPostRegistrationMenu();
+
         }
         private void ViewOrderHistoryUI()
         {
@@ -318,6 +303,7 @@ namespace ECommerce
             {
                 WriteLine(order);
             }
+            DisplayPostRegistrationMenu();
         }
 
     }

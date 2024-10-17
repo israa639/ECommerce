@@ -20,3 +20,4 @@ C:\ECommerce\ECommerce\bin\Debug\net7.0\Repository.dll
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Repository.pdb
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Service.dll
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Service.pdb
+C:\ECommerce\ECommerce\obj\Debug\net7.0\ECommerce.sourcelink.json

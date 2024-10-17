@@ -2,7 +2,7 @@
 {
     public interface IProductRepository
     {
-        public List<Product> GetAllProducts();
+        public IEnumerable<Product> GetAllProducts();
 
         public Product GetProductById(int productId);
         public void AddProduct(Product product);

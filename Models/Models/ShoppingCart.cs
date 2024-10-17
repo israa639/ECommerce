@@ -5,7 +5,7 @@ namespace Domain.Models
     {
         public string cartId { get; set; }
         public string userId { get; set; }
-        public LinkedList<CartItem> items { get; set; } = new LinkedList<CartItem>();
+        public Dictionary<int, CartItem> items { get; set; } = new Dictionary<int, CartItem>();
 
         public void InsertNewItem(CartItem newItem)
         {
@@ -18,28 +18,29 @@ namespace Domain.Models
             }
             else
             {
-                items.AddFirst(newItem);
+                items.Add(newItem.ProductId, newItem);
             }
         }
 
         public CartItem GetItem(int ProductId)
         {
-            CartItem item = items.FirstOrDefault(i => i.ProductId == ProductId);
-
-
+            CartItem item = null;
+            items.TryGetValue(ProductId, out item);
             return item;
         }
 
         public void DeleteItem(int ProductId)
         {
-            CartItem itemToBeDeleted = GetItem(ProductId);
-            if (itemToBeDeleted is null)
+
+            if (!items.ContainsKey(ProductId))
                 throw new ArgumentNullException(" product is not found");
-            items.Remove(itemToBeDeleted);
+            items.Remove(ProductId);
         }
 
         public void UpdateItem(int productId, int quantity)
         {
+            if (!items.ContainsKey(productId))
+                throw new ArgumentNullException(" product is not found");
             DeleteItem(productId);
             InsertNewItem(new CartItem() { ProductId = productId, Quantity = quantity });
         }
@@ -51,7 +52,7 @@ namespace Domain.Models
         public decimal CartTotalPrice()
         {
             decimal totalPrice = 0.0m;
-            foreach (var item in items)
+            foreach (var item in items.Values)
             {
                 totalPrice += item.TotalPrice;
             }
@@ -76,7 +77,7 @@ namespace Domain.Models
         }
         public ShoppingCart Copy()
         {
-            return new ShoppingCart() { userId = userId, cartId = cartId, items = new LinkedList<CartItem>(items) };
+            return new ShoppingCart() { userId = userId, cartId = cartId, items = new Dictionary<int, CartItem>(items) };
         }
 
 

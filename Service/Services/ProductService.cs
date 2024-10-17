@@ -3,7 +3,7 @@
     public class ProductService
     {
         readonly IProductRepository _ProductRepository = new ProductRepository();
-        public List<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
             return _ProductRepository.GetAllProducts();
 

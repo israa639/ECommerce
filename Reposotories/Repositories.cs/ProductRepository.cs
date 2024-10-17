@@ -6,14 +6,16 @@ namespace Repository.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        public List<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
-            return DataStore.products;
+            return DataStore.products.Values;
         }
 
         public Product GetProductById(int productId)
         {
-            return DataStore.products.FirstOrDefault(p => p.ProductID == productId);
+            Product product = null;
+            DataStore.products.TryGetValue(productId, out product);
+            return product;
 
 
         }
@@ -21,17 +23,19 @@ namespace Repository.Repositories
         {
             if (GetProductById(product.ProductID) is not null)
                 throw new Exception("product already exists");
-            DataStore.products.Add(product);
+            DataStore.products.Add(product.ProductID, product);
         }
         public void DeleteProduct(int productId)
         {
-            Product product = GetProductById(productId);
-            if (product is null)
-                throw new KeyNotFoundException("product is not found");
-            DataStore.products.Remove(product);
+
+            if (!DataStore.products.ContainsKey(productId))
+                throw new ArgumentNullException(" product is not found");
+            DataStore.products.Remove(productId);
         }
         public void UpdateProduct(int productId, Product newProductData)
         {
+            if (!DataStore.products.ContainsKey(productId))
+                throw new ArgumentNullException(" product is not found");
             DeleteProduct(productId);
             AddProduct(newProductData);
         }

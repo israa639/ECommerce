@@ -19,7 +19,7 @@ namespace Service.Services
         }
         public bool EnsureStockQuantity(ShoppingCart shoppingCart)
         {
-            foreach (var item in shoppingCart.items)
+            foreach (var item in shoppingCart.items.Values)
             {
                 if (!_productRepository.EnsureStockQuantity(item.ProductId, item.Quantity))
                     return false;
@@ -28,7 +28,7 @@ namespace Service.Services
         }
         public void UpdateStockQuantity(ShoppingCart shoppingCart)
         {
-            foreach (var item in shoppingCart.items)
+            foreach (var item in shoppingCart.items.Values)
             {
                 _productRepository.UpdateStockQuantityAfterOrder(item.ProductId, item.Quantity);
 
