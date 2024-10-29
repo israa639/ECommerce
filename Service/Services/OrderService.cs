@@ -1,40 +1,31 @@
 ﻿using Repository.Repositories.cs;
+using Service.IServices;
 
 namespace Service.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         readonly private IOrderRepository _orderRepository = new OrderRepository();
-        readonly private IProductRepository _productRepository = new ProductRepository();
+        readonly private IShoppingCartService _shoppingCartService = new ShoppingCartService();
         public void PlaceOrder(User user)
         {
-            if (EnsureStockQuantity(user.ShoppingCart))
+            if (_shoppingCartService.AreCartItemsInStock(user.ShoppingCart))
             {
                 ShoppingCart shoppingCart = user.ShoppingCart.Copy();
                 _orderRepository.PlaceOrder(user);
-                UpdateStockQuantity(shoppingCart);
+                _shoppingCartService.UpdateStockQuantitiesAfterOrder(shoppingCart);
+
             }
             else
+            {
+                user.ShoppingCart.ClearCart();
                 throw new Exception("Can't place this order No enough Quantity available");
-        }
-        public bool EnsureStockQuantity(ShoppingCart shoppingCart)
-        {
-            foreach (var item in shoppingCart.items.Values)
-            {
-                if (!_productRepository.EnsureStockQuantity(item.ProductId, item.Quantity))
-                    return false;
-            }
-            return true;
-        }
-        public void UpdateStockQuantity(ShoppingCart shoppingCart)
-        {
-            foreach (var item in shoppingCart.items.Values)
-            {
-                _productRepository.UpdateStockQuantityAfterOrder(item.ProductId, item.Quantity);
+
 
             }
 
         }
+
 
 
     }

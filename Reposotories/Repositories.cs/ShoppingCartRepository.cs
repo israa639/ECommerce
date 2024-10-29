@@ -8,15 +8,9 @@ namespace Repository.Repositories
 
         public void AddItem(User user, int productId, int quantity)
         {
+            Product productToBeAdded = _productRepository.GetProductById(productId);
             if (user is null)
             { throw new ArgumentException("User not found."); }
-            if (quantity <= 0)
-            {
-                throw new ArgumentException("Quantity must be greater than zero.");
-            }
-            if (_productRepository.GetProductById(productId) is null)
-                throw new Exception("product doesnot exist");
-
             CartItem newItem = new CartItem() { ProductId = productId, Quantity = quantity };
             user.ShoppingCart.InsertNewItem(newItem);
             _userRepository.Update(user.UserID, user);

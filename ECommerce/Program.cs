@@ -2,5 +2,5 @@
 
 using ECommerce;
 
-new UIManager().Run();
+new UIManager().Start();
 

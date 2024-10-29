@@ -10,8 +10,7 @@ namespace Repository.Repositories
                 !string.IsNullOrEmpty(user.Email) &&
                 !string.IsNullOrEmpty(user.UserName))
             {
-                if (DoesUsernameExist(user.UserName) || DoesEmailExist(user.Email))
-                    throw new Exception("UserName or Email already exist");
+
 
                 DataStore.Users.AddFirst(user);
                 DataStore.UserNames.Add(user.UserName);
@@ -33,11 +32,11 @@ namespace Repository.Repositories
             return DataStore.Users.FirstOrDefault(u => u.UserName == userName);
 
         }
-        private bool DoesUsernameExist(string userName)
+        public bool DoesUsernameExist(string userName)
         {
             return DataStore.UserNames.Contains(userName);
         }
-        private bool DoesEmailExist(string email)
+        public bool DoesEmailExist(string email)
         {
             return DataStore.Emails.Contains(email);
         }

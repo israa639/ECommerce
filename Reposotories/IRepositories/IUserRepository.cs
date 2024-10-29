@@ -7,6 +7,10 @@
         public User FindUserById(string userId);
         public void Update(string userId, User newUserData);
         public void Delete(string userId);
+        public bool DoesUsernameExist(string userName);
+
+        public bool DoesEmailExist(string email);
+
 
 
 

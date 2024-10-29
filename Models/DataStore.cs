@@ -4,7 +4,7 @@ namespace Domain
 {
     public static class DataStore
     {
-        public static LinkedList<User> Users { get; } = new(new List<User>{
+        public static LinkedList<User> Users { get; } = new LinkedList<User>(new List<User>{
         new User()
         {
             UserID = Guid.NewGuid().ToString(),UserName = "israa",

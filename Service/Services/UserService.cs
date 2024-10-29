@@ -1,6 +1,8 @@
-﻿namespace Service.Services
+﻿using Service.IServices;
+
+namespace Service.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         readonly private IUserRepository _userReository = new UserRepository();
         readonly private UserSignUpValidator _userSignUpValidator = new UserSignUpValidator();
@@ -18,6 +20,7 @@
                     Address = userSignupDTO.Address,
                     Email = userSignupDTO.Email
                 };
+                CheckForExistingUser(SignUpUser);
 
 
                 try
@@ -78,6 +81,12 @@
                 throw new ArgumentException(" user is not found");
 
             return currentUser;
+        }
+
+        private void CheckForExistingUser(User user)
+        {
+            if (_userReository.DoesEmailExist(user.Email) || _userReository.DoesUsernameExist(user.UserName))
+                throw new InvalidOperationException("Username or Email already exist.");
         }
 
 

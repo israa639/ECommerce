@@ -10,7 +10,7 @@ namespace Domain.Models
         public void InsertNewItem(CartItem newItem)
         {
             if (newItem is null)
-                throw new ArgumentException("item shouldn't be null");
+                throw new ArgumentNullException("item shouldn't be null");
             CartItem item = GetItem(newItem.ProductId);
             if (item is not null)
             {
@@ -33,14 +33,14 @@ namespace Domain.Models
         {
 
             if (!items.ContainsKey(ProductId))
-                throw new ArgumentNullException(" product is not found");
+                throw new InvalidOperationException(" product is not found in your cart");
             items.Remove(ProductId);
         }
 
         public void UpdateItem(int productId, int quantity)
         {
             if (!items.ContainsKey(productId))
-                throw new ArgumentNullException(" product is not found");
+                throw new InvalidOperationException(" product is not found in your cart");
             DeleteItem(productId);
             InsertNewItem(new CartItem() { ProductId = productId, Quantity = quantity });
         }
