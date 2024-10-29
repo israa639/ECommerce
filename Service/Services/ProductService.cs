@@ -4,7 +4,13 @@ namespace Service.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository = new ProductRepository();
+        private readonly IProductRepository _productRepository;
+
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _productRepository.GetAllProducts();

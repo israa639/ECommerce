@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "/YbnWSbkIKb4EclON4PEjwwjNWBmnzu0Cch5xrkzvf6lRxhH4tmdx7iK2ml7XU/qjnz4q2JqpjVylSHnau804g==",
+  "dgSpecHash": "4pYL/sIfqlufLfvLCktOcyq/7o01B7v8UH/W5FWcnn96xo/6tTUKxy1WFzBHpK3KrwqkKpfEWF3ccrUC0n8OWw==",
   "success": true,
   "projectFilePath": "C:\\ECommerce\\Service\\Service.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.1\\microsoft.extensions.dependencyinjection.8.0.1.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512"

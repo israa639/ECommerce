@@ -21,3 +21,5 @@ C:\ECommerce\ECommerce\bin\Debug\net7.0\Repository.pdb
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Service.dll
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Service.pdb
 C:\ECommerce\ECommerce\obj\Debug\net7.0\ECommerce.sourcelink.json
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

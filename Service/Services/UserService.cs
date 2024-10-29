@@ -4,8 +4,15 @@ namespace Service.Services
 {
     public class UserService : IUserService
     {
-        readonly private IUserRepository _userReository = new UserRepository();
-        readonly private UserSignUpValidator _userSignUpValidator = new UserSignUpValidator();
+        private readonly IUserRepository _userReository;
+        private readonly UserSignUpValidator _userSignUpValidator;
+
+        public UserService(IUserRepository userReository, UserSignUpValidator userSignUpValidator)
+        {
+            _userReository = userReository;
+            _userSignUpValidator = userSignUpValidator;
+        }
+
         public List<string> SignUp(UserSignupDTO userSignupDTO)
         {
 

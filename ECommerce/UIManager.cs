@@ -3,10 +3,23 @@
 
     internal class UIManager
     {
-        private readonly UserService _userService = new();
-        private readonly ShoppingCartManager _shoppingCartManager = new ShoppingCartManager();
-        private OrderManager orderManager = new OrderManager();
+        private readonly IUserService _userService;
+        private readonly ShoppingCartManager _shoppingCartManager;
+        private readonly OrderManager _orderManager;
+        private readonly ProductManager _productManager;
         private User currentUser = new User();
+        public UIManager(IUserService userService,
+            ShoppingCartManager shoppingCartManager,
+            OrderManager orderManager,
+            ProductManager productManager
+            )
+        {
+            this._userService = userService;
+            this._shoppingCartManager = shoppingCartManager;
+            this._orderManager = orderManager;
+            this._productManager = productManager;
+
+        }
         public void Start()
         {
             DisplayPreRegistrationMenu();
@@ -45,12 +58,12 @@
             int userChoice = UserInputHandler.ReadUserMenuChoice();
             switch (userChoice)
             {
-                case 1: ProductManager.DisplayProducts(); break;
+                case 1: _productManager.DisplayProducts(); break;
                 case 2: _shoppingCartManager.DisplayUserShoppingCartUI(currentUser); break;
                 case 3: _shoppingCartManager.AddItemToCartUI(currentUser); break;
                 case 4: _shoppingCartManager.UpdateItemInTheCartUI(currentUser); break;
                 case 5: _shoppingCartManager.RemoveItemFromTheCartUI(currentUser); break;
-                case 6: orderManager.ViewOrderHistory(currentUser); break;
+                case 6: _orderManager.ViewOrderHistory(currentUser); break;
                 default: _shoppingCartManager.DisplayUserShoppingCartUI(currentUser); break;
 
 

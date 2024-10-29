@@ -3,7 +3,12 @@
     internal class OrderManager
     {
 
-        private IOrderService _orderService = new OrderService();
+        private IOrderService _orderService;
+
+        public OrderManager(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
 
         public void MakeOrder(User currentUser)
         {

@@ -2,7 +2,7 @@
 
 namespace Service
 {
-    internal class UserSignUpValidator
+    public class UserSignUpValidator
     {
         public List<string> Validate(UserSignupDTO userSignUpDTO)
         {

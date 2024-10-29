@@ -3,8 +3,14 @@ namespace Repository.Repositories
 {
     public class ShoppingCartRepository : IShoppingCartRepository
     {
-        readonly IUserRepository _userRepository = new UserRepository();
-        readonly IProductRepository _productRepository = new ProductRepository();
+        readonly IUserRepository _userRepository;
+        readonly IProductRepository _productRepository;
+
+        public ShoppingCartRepository(IUserRepository userRepository, IProductRepository productRepository)
+        {
+            _userRepository = userRepository;
+            _productRepository = productRepository;
+        }
 
         public void AddItem(User user, int productId, int quantity)
         {

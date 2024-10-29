@@ -2,8 +2,16 @@
 {
     internal class ShoppingCartManager
     {
-        private ShoppingCartService _shoppingCartService = new();
-        OrderManager orderManager = new OrderManager();
+        private readonly IShoppingCartService _shoppingCartService;
+        private readonly OrderManager _orderManager;
+        public ShoppingCartManager(IShoppingCartService shoppingCartService, OrderManager orderManager)
+        {
+            _shoppingCartService = shoppingCartService;
+            _orderManager = orderManager;
+
+        }
+
+
 
 
         public void DisplayUserShoppingCartUI(User currentUser)
@@ -22,7 +30,7 @@
             int userChoice = UserInputHandler.ReadUserMenuChoice();
 
             if (userChoice == 1)
-                orderManager.MakeOrder(currentUser);
+                _orderManager.MakeOrder(currentUser);
         }
         public void AddItemToCartUI(User currentUser)
         {

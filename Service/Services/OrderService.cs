@@ -1,12 +1,18 @@
-﻿using Repository.Repositories.cs;
-using Service.IServices;
+﻿using Service.IServices;
 
 namespace Service.Services
 {
     public class OrderService : IOrderService
     {
-        readonly private IOrderRepository _orderRepository = new OrderRepository();
-        readonly private IShoppingCartService _shoppingCartService = new ShoppingCartService();
+        private readonly IOrderRepository _orderRepository;
+        private readonly IShoppingCartService _shoppingCartService;
+
+        public OrderService(IOrderRepository orderRepository, IShoppingCartService shoppingCartService)
+        {
+            _orderRepository = orderRepository;
+            _shoppingCartService = shoppingCartService;
+        }
+
         public void PlaceOrder(User user)
         {
             if (_shoppingCartService.AreCartItemsInStock(user.ShoppingCart))

@@ -2,17 +2,20 @@
 {
     internal class ProductManager
     {
-        private static IProductService _productService = new ProductService();
+        private readonly IProductService _productService;
 
 
-
-        public static void DisplayProducts()
+        public ProductManager(IProductService productService)
+        {
+            _productService = productService;
+        }
+        public void DisplayProducts()
         {
             foreach (var product in _productService.GetAllProducts())
             {
                 WriteLine(product);
             }
-            //DisplayPostRegistrationMenu();
+
         }
     }
 }

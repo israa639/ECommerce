@@ -4,9 +4,17 @@ namespace Service.Services
 {
     public class ShoppingCartService : IShoppingCartService
     {
-        readonly private IUserRepository _userReository = new UserRepository();
-        readonly private IProductService _productService = new ProductService();
-        readonly private IShoppingCartRepository _shoppingCartRepository = new ShoppingCartRepository();
+        private readonly IUserRepository _userReository;
+        private readonly IProductService _productService;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
+
+        public ShoppingCartService(IUserRepository userReository, IProductService productService, IShoppingCartRepository shoppingCartRepository)
+        {
+            _userReository = userReository;
+            _productService = productService;
+            _shoppingCartRepository = shoppingCartRepository;
+        }
+
         public void AddToCart(User user, int productId, int quantity)
         {
 
