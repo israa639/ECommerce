@@ -23,3 +23,13 @@ C:\ECommerce\ECommerce\bin\Debug\net7.0\Service.pdb
 C:\ECommerce\ECommerce\obj\Debug\net7.0\ECommerce.sourcelink.json
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
 C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Serilog.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Serilog.Sinks.Console.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
