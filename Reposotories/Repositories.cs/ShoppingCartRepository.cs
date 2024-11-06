@@ -1,13 +1,15 @@
-﻿
-namespace Repository.Repositories
+﻿namespace Repositories
 {
     public class ShoppingCartRepository : IShoppingCartRepository
     {
         readonly IUserRepository _userRepository;
         readonly IProductRepository _productRepository;
+        AppDbContext _dbContext;
 
-        public ShoppingCartRepository(IUserRepository userRepository, IProductRepository productRepository)
+
+        public ShoppingCartRepository(IUserRepository userRepository, IProductRepository productRepository, AppDbContext dbContext)
         {
+            _dbContext = dbContext;
             _userRepository = userRepository;
             _productRepository = productRepository;
         }
@@ -17,9 +19,11 @@ namespace Repository.Repositories
             Product productToBeAdded = _productRepository.GetProductById(productId);
             if (user is null)
             { throw new ArgumentException("User not found."); }
-            CartItem newItem = new CartItem() { ProductId = productId, Quantity = quantity };
+            CartItem newItem = new CartItem() { Id = Guid.NewGuid().ToString(), ProductId = productId, Quantity = quantity, CreatedBy = user.Id, CreatedOn = DateTime.Now, unitPrice = productToBeAdded.Price };
+
             user.ShoppingCart.InsertNewItem(newItem);
-            _userRepository.Update(user.UserID, user);
+            _dbContext.Users.Update(user);
+            _dbContext.SaveChanges();
 
         }
         public IEnumerable<CartItem> GetItems(User user)
@@ -27,16 +31,19 @@ namespace Repository.Repositories
 
             if (user is null)
             { throw new ArgumentException("User not found."); }
-            return user.ShoppingCart.items.Values;
+            return user.ShoppingCart.items;
         }
         public void DeleteItem(User user, int productId)
         {
 
             if (user is null)
             { throw new ArgumentException("User is not found."); }
+            CartItem item = GetItemById(user, productId);
+            //item.IsDeleted = true;
+            // _dbContext.Users.Update(user);
+            _dbContext.Remove(item);
 
-            user.ShoppingCart.DeleteItem(productId);
-            _userRepository.Update(user.UserID, user);
+            _dbContext.SaveChanges();
 
         }
 
@@ -46,14 +53,21 @@ namespace Repository.Repositories
             { throw new ArgumentException("User is not found."); }
             if (GetItemById(user, productId) is null)
             { throw new ArgumentException("item is not in you cart"); }
+            user.ShoppingCart.UpdateItem(productId, quantity);
+            _dbContext.Users.Update(user);
+            _dbContext.SaveChanges();
 
-            DeleteItem(user, productId);
-            AddItem(user, productId, quantity);
         }
 
         public CartItem GetItemById(User user, int productId)
         {
             return user.ShoppingCart.GetItem(productId);
+        }
+        public void ClearCart(User user)
+        {
+            user.ShoppingCart.ClearCart();
+            _userRepository.Update(user);
+
         }
     }
 }

@@ -1,20 +1,23 @@
 ﻿
-namespace Repository.Repositories
+namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
+        AppDbContext _dbContext;
+
+        public UserRepository(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Insert(User user)
         {
-            if (user is not null &&
-                !string.IsNullOrEmpty(user.Email) &&
-                !string.IsNullOrEmpty(user.UserName))
+            if (user is not null)
             {
 
 
-                DataStore.Users.AddFirst(user);
-                DataStore.UserNames.Add(user.UserName);
-                DataStore.Emails.Add(user.Email);
+                _dbContext.Users.Add(user);
+                _dbContext.SaveChanges();
             }
             else
             {
@@ -29,32 +32,31 @@ namespace Repository.Repositories
 
             }
 
-            return DataStore.Users.FirstOrDefault(u => u.UserName == userName);
+            return _dbContext.Users.FirstOrDefault(u => u.UserName == userName);
 
         }
         public bool DoesUsernameExist(string userName)
         {
-            return DataStore.UserNames.Contains(userName);
+            return _dbContext.Users.Any(u => u.UserName == userName);
         }
         public bool DoesEmailExist(string email)
         {
-            return DataStore.Emails.Contains(email);
+            return _dbContext.Users.Any(u => u.Email == email);
         }
 
-        public void Update(string userId, User newUserData)
+        public void Update(User newUserData)
         {
-            Delete(userId);
-            Insert(newUserData);
+            _dbContext.Users.Update(newUserData);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(string userId)
         {
-            User userToBeRemoved = DataStore.Users.FirstOrDefault(u => u.UserID == userId);
+            User userToBeRemoved = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
             if (userToBeRemoved is null)
                 throw new ArgumentException("user is not found");
-            DataStore.Emails.Remove(userToBeRemoved.Email);
-            DataStore.UserNames.Remove(userToBeRemoved.UserName);
-            DataStore.Users.Remove(userToBeRemoved);
+            _dbContext.Users.Remove(userToBeRemoved);
+            _dbContext.SaveChanges();
 
         }
 
@@ -66,7 +68,7 @@ namespace Repository.Repositories
 
             }
 
-            return DataStore.Users.FirstOrDefault(u => u.UserID == userId);
+            return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
         }
     }
 }

@@ -1,20 +1,28 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace Domain.Models
+namespace Core.Domain.Models
 {
-    public class Order
+    public class Order : BaseEntity<string>
     {
-        public string OrderID { get; set; } = Guid.NewGuid().ToString();
-        public string UserID { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.Now;
 
 
-        public IEnumerable<CartItem> OrderItems = new LinkedList<CartItem>();
+
+
+
+        public virtual IEnumerable<OrderItem> OrderItems { get; set; } = new LinkedList<OrderItem>();
+        [Column(TypeName = "money")]
         public decimal TotalAmount { get; set; }
 
         public override string ToString()
         {
-            return $"Code:{OrderID} Date:{OrderDate}  price:{TotalAmount} ";
+            StringBuilder orderDataString = new();
+            orderDataString.Append($"Code:{Id} Date:{CreatedOn}  price:{TotalAmount} ");
+            foreach (var item in OrderItems)
+            {
+                orderDataString.Append(item);
+            }
+            return orderDataString.ToString();
         }
     }
 }

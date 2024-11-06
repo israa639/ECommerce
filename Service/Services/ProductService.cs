@@ -1,6 +1,5 @@
-﻿using Service.IServices;
-
-namespace Service.Services
+﻿
+namespace Services
 {
     public class ProductService : IProductService
     {

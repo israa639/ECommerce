@@ -1,6 +1,6 @@
-﻿using Service.IServices;
+﻿
 
-namespace Service.Services
+namespace Services
 {
     public class ShoppingCartService : IShoppingCartService
     {
@@ -44,7 +44,7 @@ namespace Service.Services
         }
         public bool AreCartItemsInStock(ShoppingCart shoppingCart)
         {
-            foreach (var item in shoppingCart.items.Values)
+            foreach (var item in shoppingCart.items)
             {
                 if (!_productService.HasSufficientStock(item.ProductId, item.Quantity))
                     return false;
@@ -53,13 +53,16 @@ namespace Service.Services
         }
         public void UpdateStockQuantitiesAfterOrder(ShoppingCart shoppingCart)
         {
-            foreach (var item in shoppingCart.items.Values)
+            foreach (var item in shoppingCart.items)
             {
                 _productService.UpdateProductQuantityInStock(item.ProductId, item.Quantity);
 
             }
 
         }
-
+        public void ClearCart(User user)
+        {
+            _shoppingCartRepository.ClearCart(user);
+        }
     }
 }

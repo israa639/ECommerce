@@ -1,11 +1,11 @@
-﻿
-namespace Domain.Models
+﻿namespace Core.Domain.Models
 {
-    public class ShoppingCart
+    public class ShoppingCart : BaseEntity<string>
     {
-        public string cartId { get; set; }
-        public string userId { get; set; }
-        public Dictionary<int, CartItem> items { get; set; } = new Dictionary<int, CartItem>();
+
+
+        public virtual User user { get; set; }
+        public virtual LinkedList<CartItem> items { get; set; } = new LinkedList<CartItem>();
 
         public void InsertNewItem(CartItem newItem)
         {
@@ -18,31 +18,39 @@ namespace Domain.Models
             }
             else
             {
-                items.Add(newItem.ProductId, newItem);
+                items.AddLast(newItem);
             }
         }
 
         public CartItem GetItem(int ProductId)
         {
-            CartItem item = null;
-            items.TryGetValue(ProductId, out item);
-            return item;
+            return items.FirstOrDefault(item => item.ProductId == ProductId);
         }
 
         public void DeleteItem(int ProductId)
         {
-
-            if (!items.ContainsKey(ProductId))
+            CartItem itemToBeRemoved = items.FirstOrDefault(item => item.ProductId == ProductId);
+            if (itemToBeRemoved is null)
                 throw new InvalidOperationException(" product is not found in your cart");
-            items.Remove(ProductId);
+            items.Remove(itemToBeRemoved);
         }
 
         public void UpdateItem(int productId, int quantity)
         {
-            if (!items.ContainsKey(productId))
+            CartItem itemToBeUpdated = items.FirstOrDefault(item => item.ProductId == productId);
+            if (itemToBeUpdated is null)
                 throw new InvalidOperationException(" product is not found in your cart");
             DeleteItem(productId);
-            InsertNewItem(new CartItem() { ProductId = productId, Quantity = quantity });
+            InsertNewItem(new CartItem()
+            {
+                Id = itemToBeUpdated.Id,
+                ProductId = productId,
+                Quantity = quantity,
+                CreatedBy = itemToBeUpdated.CreatedBy,
+                CreatedOn = itemToBeUpdated.CreatedOn,
+                UpdatedOn = DateTime.Now,
+                UpdatedBy = user.Id
+            });
         }
 
         public void ClearCart()
@@ -52,7 +60,7 @@ namespace Domain.Models
         public decimal CartTotalPrice()
         {
             decimal totalPrice = 0.0m;
-            foreach (var item in items.Values)
+            foreach (var item in items)
             {
                 totalPrice += item.TotalPrice;
             }
@@ -66,18 +74,30 @@ namespace Domain.Models
         {
             if (obj is ShoppingCart other)
             {
-                return this.cartId == other.cartId;
+                return this.Id == other.Id;
             }
             return false;
         }
 
         public override int GetHashCode()
         {
-            return cartId.GetHashCode();
+            return Id.GetHashCode();
         }
         public ShoppingCart Copy()
         {
-            return new ShoppingCart() { userId = userId, cartId = cartId, items = new Dictionary<int, CartItem>(items) };
+            return new ShoppingCart() { CreatedBy = CreatedBy, Id = Id, items = new LinkedList<CartItem>(items) };
+        }
+
+
+        public IEnumerable<OrderItem> ToOrderItems()
+        {
+            LinkedList<OrderItem> orderItems = new();
+            foreach (var item in this.items)
+            {
+                OrderItem orderItem = item;
+                orderItems.AddLast(orderItem);
+            }
+            return orderItems;
         }
 
 

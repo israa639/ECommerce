@@ -1,43 +1,51 @@
-﻿
-
-
-
-namespace Repository.Repositories
+﻿namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
+        AppDbContext _dbContext;
+
+        public ProductRepository(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public bool exists(int productId)
+        {
+            return _dbContext.Products.Any(p => p.Id == productId);
+        }
         public IEnumerable<Product> GetAllProducts()
         {
-            return DataStore.products.Values;
+            return _dbContext.Products;
         }
 
         public Product GetProductById(int productId)
         {
-            Product product = null;
-            DataStore.products.TryGetValue(productId, out product);
-            return product;
+            return _dbContext.Products.FirstOrDefault(p => p.Id == productId);
 
 
         }
         public void AddProduct(Product product)
         {
-            if (GetProductById(product.ProductID) is not null)
+            if (exists(product.Id))
                 throw new Exception("product already exists");
-            DataStore.products.Add(product.ProductID, product);
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
         }
         public void DeleteProduct(int productId)
         {
 
-            if (!DataStore.products.ContainsKey(productId))
+            if (!exists(productId))
                 throw new ArgumentNullException(" product is not found");
-            DataStore.products.Remove(productId);
+            _dbContext.Products.Remove(_dbContext.Products.First(p => p.Id == productId));
+            _dbContext.SaveChanges();
         }
-        public void UpdateProduct(int productId, Product newProductData)
+        public void UpdateProduct(Product newProductData)
         {
-            if (!DataStore.products.ContainsKey(productId))
+            if (!exists(newProductData.Id))
                 throw new ArgumentNullException(" product is not found");
-            DeleteProduct(productId);
-            AddProduct(newProductData);
+
+            _dbContext.Products.Update(newProductData);
+            _dbContext.SaveChanges();
         }
         public bool EnsureStockQuantity(int productId, int quantity)
         {
@@ -52,7 +60,7 @@ namespace Repository.Repositories
             try
             {
                 product.StockQuantity = product.StockQuantity - quantity;
-                UpdateProduct(productId, product);
+                UpdateProduct(product);
                 return true;
 
             }

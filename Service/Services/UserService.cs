@@ -1,6 +1,6 @@
-﻿using Service.IServices;
+﻿
 
-namespace Service.Services
+namespace Services
 {
     public class UserService : IUserService
     {
@@ -19,13 +19,24 @@ namespace Service.Services
             List<string> errors = _userSignUpValidator.Validate(userSignupDTO);
             if (!errors.Any())
             {
+                var userId = Guid.NewGuid().ToString();
+                var ShoppingCartId = Guid.NewGuid().ToString();
+
                 User SignUpUser = new()
                 {
-                    UserID = Guid.NewGuid().ToString(),
+                    Id = userId,
+                    CreatedBy = userId,
+                    CreatedOn = DateTime.Now,
                     UserName = userSignupDTO.UserName,
                     Password = userSignupDTO.Password,
                     Address = userSignupDTO.Address,
-                    Email = userSignupDTO.Email
+                    Email = userSignupDTO.Email,
+                    ShoppingCart = new() { Id = ShoppingCartId, CreatedBy = userId },
+                    // ShoppingCartId = ShoppingCartId
+
+
+
+
                 };
                 CheckForExistingUser(SignUpUser);
 
@@ -36,7 +47,7 @@ namespace Service.Services
                 }
                 catch (Exception ex)
                 {
-                    errors.Add(ex.Message);
+                    errors.Add(ex.InnerException.ToString());
                 }
 
             }

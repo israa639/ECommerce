@@ -18,7 +18,7 @@
         {
             WriteLine("Your shopping Cart");
             WriteLine("----------------------------------------");
-            foreach (var item in currentUser.ShoppingCart.items.Values)
+            foreach (var item in currentUser.ShoppingCart.items)
             {
                 WriteLine(item);
             }

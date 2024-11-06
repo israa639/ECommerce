@@ -1,6 +1,6 @@
 ﻿
 
-namespace Domain.DTOS
+namespace Core.Domain.DTOS
 {
     public class UserSignInDTO
     {

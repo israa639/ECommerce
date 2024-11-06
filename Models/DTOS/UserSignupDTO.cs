@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-
-namespace Domain.DTOS
+﻿namespace Core.Domain.DTOS
 {
     public class UserSignupDTO
     {
@@ -10,6 +8,6 @@ namespace Domain.DTOS
         public required string Password { get; set; }
         public required string ConfirmPassword { get; set; }
         public required string Email { get; set; }
-        public required Address Address { get; set; }
+        public required string Address { get; set; }
     }
 }

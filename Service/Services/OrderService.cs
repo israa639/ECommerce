@@ -1,6 +1,5 @@
-﻿using Service.IServices;
-
-namespace Service.Services
+﻿
+namespace Services
 {
     public class OrderService : IOrderService
     {
@@ -20,11 +19,12 @@ namespace Service.Services
                 ShoppingCart shoppingCart = user.ShoppingCart.Copy();
                 _orderRepository.PlaceOrder(user);
                 _shoppingCartService.UpdateStockQuantitiesAfterOrder(shoppingCart);
+                _shoppingCartService.ClearCart(user);
 
             }
             else
             {
-                user.ShoppingCart.ClearCart();
+
                 throw new Exception("Can't place this order No enough Quantity available");
 
 

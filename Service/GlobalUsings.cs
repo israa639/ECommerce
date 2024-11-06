@@ -1,4 +1,5 @@
-﻿global using Domain.DTOS;
-global using Domain.Models;
-global using Repository.IRepositories;
-global using Repository.Repositories;
+﻿global using Core.Domain.DTOS;
+global using Core.Domain.Models;
+global using Core.IRepositories;
+global using Core.IServices;
+global using Service;

@@ -1,6 +1,10 @@
-﻿global using Domain.DTOS;
-global using Domain.Models;
-global using Repository.IRepositories;
-global using Repository.Repositories;
-global using Service.IServices;
-global using Service.Services;
+﻿global using Core.Domain.DTOS;
+global using Core.Domain.Models;
+global using Core.IRepositories;
+global using Core.IServices;
+global using ECommerce;
+global using Microsoft.Extensions.DependencyInjection;
+global using Repositories;
+global using Serilog;
+global using Service;
+global using Services;

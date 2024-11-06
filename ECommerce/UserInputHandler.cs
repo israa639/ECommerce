@@ -46,12 +46,7 @@
                     Password = password,
                     ConfirmPassword = confirmPassword,
                     Email = email,
-                    Address = new()
-                    {
-                        country = country,
-                        city = city,
-                        street = street
-                    }
+                    Address = $"{street},{city},{country}"
                 };
 
 

@@ -1,21 +1,37 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Models
+namespace Core.Domain.Models
 {
-    public class CartItem
+    public class CartItem : BaseEntity<string>
     {
 
+        [ForeignKey("cart")]
+        public string CartId { get; set; }
+
+        public virtual ShoppingCart cart { get; set; }
+        [ForeignKey("product")]
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public Decimal TotalPrice { get => CalculatePrice(); }
+        [Column(TypeName = "money")]
+        public decimal unitPrice { get; set; }
+        public virtual Product product { get; set; }
+        [Column(TypeName = "money")]
+        public Decimal TotalPrice { get => Quantity * unitPrice; }
 
 
-        private Decimal CalculatePrice()
+        public static implicit operator OrderItem(CartItem item)
         {
-            Product product = null;
-            DataStore.products.TryGetValue(ProductId, out product);
-            return product is null ? 0 : Quantity * product.Price;
+            return new OrderItem()
+            {
+                Id = item.Id,
+                CreatedBy = item.CreatedBy,
+                CreatedOn = item.CreatedOn,
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                TotalPrice = item.TotalPrice
+            };
         }
+
         public override string ToString()
         {
             return $"Product id:{ProductId}  Quantity:{Quantity} TotalPrice:{TotalPrice}";
