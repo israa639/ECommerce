@@ -16,7 +16,7 @@ namespace ECommerce
             //{ Options.UseSqlServer("Data Source=.;Initial Catalog=Ecommerce;Integrated Security=True;TrustServerCertificate=True"); });
 
 
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddSingleton(Log.Logger).AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -29,6 +29,8 @@ namespace ECommerce
             services.AddScoped<ProductManager>();
             services.AddScoped<ShoppingCartManager>();
             services.AddScoped<UIManager>();
+
+
 
             return services;
 

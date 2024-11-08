@@ -12,7 +12,7 @@ namespace Repository
             LinkedList<User> users = new();
             LinkedList<ShoppingCart> shoppingCarts = new();
 
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 5000; i++)
             {
                 string userId = Guid.NewGuid().ToString();
                 DateTime time = DateTime.Now;

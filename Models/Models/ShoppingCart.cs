@@ -5,7 +5,7 @@
 
 
         public virtual User user { get; set; }
-        public virtual LinkedList<CartItem> items { get; set; } = new LinkedList<CartItem>();
+        public virtual ICollection<CartItem> items { get; set; } = new LinkedList<CartItem>();
 
         public void InsertNewItem(CartItem newItem)
         {
@@ -18,7 +18,7 @@
             }
             else
             {
-                items.AddLast(newItem);
+                items.Add(newItem);
             }
         }
 

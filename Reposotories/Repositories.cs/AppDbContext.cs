@@ -1,7 +1,9 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
+using Serilog;
 
 namespace Repositories
 {
@@ -28,7 +30,17 @@ namespace Repositories
 
             builder.Entity<User>().HasOne(user => user.ShoppingCart).WithOne(cart => cart.user).
                 HasForeignKey<ShoppingCart>(cart => cart.CreatedBy).
-                OnDelete(DeleteBehavior.NoAction); ;
+                OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<User>().HasMany(user => user.Orders).WithOne(order => order.user).HasForeignKey(order => order.CreatedBy).
+              OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .HasDatabaseName("IX_User_Email");
+            builder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .HasDatabaseName("IX_User_UserName");
+
             builder.seedUsersAndShoppingCarts();
             builder.seedProducts();
 
@@ -40,7 +52,8 @@ namespace Repositories
                 if (!optionsBuilder.IsConfigured)
                 {
                     optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=.;Initial Catalog=Ecommerce;Integrated Security=True;TrustServerCertificate=True");
-                    optionsBuilder.EnableSensitiveDataLogging();
+                    optionsBuilder.EnableSensitiveDataLogging().
+                        LogTo(Log.Information, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Debug);
                 }
                 base.OnConfiguring(optionsBuilder);
             }

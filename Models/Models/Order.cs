@@ -9,8 +9,8 @@ namespace Core.Domain.Models
 
 
 
-
-        public virtual IEnumerable<OrderItem> OrderItems { get; set; } = new LinkedList<OrderItem>();
+        public virtual User user { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new LinkedList<OrderItem>();
         [Column(TypeName = "money")]
         public decimal TotalAmount { get; set; }
 

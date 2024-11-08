@@ -39,8 +39,7 @@
             if (user is null)
             { throw new ArgumentException("User is not found."); }
             CartItem item = GetItemById(user, productId);
-            //item.IsDeleted = true;
-            // _dbContext.Users.Update(user);
+
             _dbContext.Remove(item);
 
             _dbContext.SaveChanges();

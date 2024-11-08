@@ -6,11 +6,14 @@ namespace Services
     {
         private readonly IUserRepository _userReository;
         private readonly UserSignUpValidator _userSignUpValidator;
+        private readonly ILogger _logger;
 
-        public UserService(IUserRepository userReository, UserSignUpValidator userSignUpValidator)
+
+        public UserService(IUserRepository userReository, UserSignUpValidator userSignUpValidator, ILogger logger)
         {
             _userReository = userReository;
             _userSignUpValidator = userSignUpValidator;
+            _logger = logger;
         }
 
         public List<string> SignUp(UserSignupDTO userSignupDTO)
@@ -32,10 +35,6 @@ namespace Services
                     Address = userSignupDTO.Address,
                     Email = userSignupDTO.Email,
                     ShoppingCart = new() { Id = ShoppingCartId, CreatedBy = userId },
-                    // ShoppingCartId = ShoppingCartId
-
-
-
 
                 };
                 CheckForExistingUser(SignUpUser);
@@ -44,9 +43,11 @@ namespace Services
                 try
                 {
                     _userReository.Insert(SignUpUser);
+                    Log.Information($"user {SignUpUser.Id} registered successfully");
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("error happened while registering new user");
                     errors.Add(ex.InnerException.ToString());
                 }
 
@@ -70,23 +71,19 @@ namespace Services
             }
             try
             {
-                User signInUser = _userReository.FindUserByUserName(userSignInDTO.UserName);
-                if (signInUser is null)
-                {
-                    errors.Add("userName is not found");
-                }
-                else
-                {
-                    if (signInUser.Password != userSignInDTO.Password)
-                    {
-                        errors.Add("incorrect password");
+                User signInUser = GetCurrentUser(userSignInDTO.UserName);
 
-                    }
+
+                if (signInUser.Password != userSignInDTO.Password)
+                {
+                    errors.Add("incorrect password");
+
                 }
+
             }
             catch (Exception ex)
             {
-                errors.Add("UserName or password shouldn't be empty");
+                errors.Add(ex.Message);
             }
 
             return errors;

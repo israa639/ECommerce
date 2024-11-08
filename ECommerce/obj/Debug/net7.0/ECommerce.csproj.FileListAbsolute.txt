@@ -113,3 +113,4 @@ C:\ECommerce\ECommerce\obj\Debug\net7.0\refint\ECommerce.dll
 C:\ECommerce\ECommerce\obj\Debug\net7.0\ECommerce.pdb
 C:\ECommerce\ECommerce\obj\Debug\net7.0\ECommerce.genruntimeconfig.cache
 C:\ECommerce\ECommerce\obj\Debug\net7.0\ref\ECommerce.dll
+C:\ECommerce\ECommerce\bin\Debug\net7.0\Serilog.Sinks.MSSqlServer.dll

@@ -7,10 +7,9 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public String Address { get; set; }
-        // [ForeignKey("ShoppingCart")]
-        // public string? ShoppingCartId { get; set; }
+
         public virtual ShoppingCart ShoppingCart { get; set; } = default;
-        public virtual LinkedList<Order> Orders { get; } = new LinkedList<Order>();
+        public virtual ICollection<Order> Orders { get; set; } = new LinkedList<Order>();
 
         public override bool Equals(object obj)
         {
@@ -30,9 +29,9 @@
             if (!ShoppingCart.items.Any())
                 throw new Exception("Cart is empty");
 
-            Order newOrder = new Order() { Id = Guid.NewGuid().ToString(), OrderItems = ShoppingCart.ToOrderItems(), TotalAmount = ShoppingCart.CartTotalPrice(), CreatedBy = this.Id, CreatedOn = DateTime.Now };
+            Order newOrder = new Order() { Id = Guid.NewGuid().ToString(), OrderItems = (ICollection<OrderItem>)ShoppingCart.ToOrderItems(), TotalAmount = ShoppingCart.CartTotalPrice(), CreatedBy = this.Id, CreatedOn = DateTime.Now };
             ShoppingCart.ClearCart();
-            Orders.AddFirst(newOrder);
+            Orders.Add(newOrder);
             return newOrder.TotalAmount;
 
         }
